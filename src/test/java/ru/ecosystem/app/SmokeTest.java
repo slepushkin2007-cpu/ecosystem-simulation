@@ -11,7 +11,7 @@ class SmokeTest {
 
     @Test
     void testMainRunsWithoutErrors() {
-        // Перехватываем вывод, чтобы не засорять консоль во время тестов
+        // Перехватываем вывод
         PrintStream originalOut = System.out;
         PrintStream originalErr = System.err;
         ByteArrayOutputStream capturedOut = new ByteArrayOutputStream();
@@ -19,7 +19,7 @@ class SmokeTest {
         System.setErr(new PrintStream(capturedOut));
 
         try {
-            // Запускаем Main с маленьким полем и 3 поколениями
+            // Маленькое поле и мало шагов
             String[] args = {"--width", "5", "--height", "5", "--ticks", "3", "--herbivores", "2", "--predators", "1", "--grass", "5"};
             Main.main(args);
 

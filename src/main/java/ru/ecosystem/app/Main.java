@@ -40,6 +40,16 @@ public final class Main {
             }
         }
 
+        // Защита от ошибок при запуске на маленьких полях
+        int maxArea = width * height;
+        if (grass > maxArea) {
+            grass = Math.max(0, maxArea / 2);
+        }
+        if (herbivores + predators > maxArea) {
+            herbivores = Math.max(0, maxArea / 4);
+            predators = Math.max(0, maxArea / 4);
+        }
+
         SimulationConfig config = SimulationConfig.builder()
                 .width(width)
                 .height(height)

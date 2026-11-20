@@ -3,9 +3,6 @@ package ru.ecosystem.model;
 import ru.ecosystem.model.entity.Animal;
 import ru.ecosystem.model.entity.Grass;
 
-/**
- * Клетка решётки. Хранит ссылки на траву и животное.
- */
 public class Cell {
     private Grass grass;
     private Animal animal;

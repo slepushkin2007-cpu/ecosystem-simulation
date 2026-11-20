@@ -2,10 +2,6 @@ package ru.ecosystem.model;
 
 import ru.ecosystem.model.exception.InvalidConfigException;
 
-/**
- * Параметры симуляции. Все числовые «магические числа» живут здесь.
- * Класс неизменяемый (immutable), настройки задаются через Builder.
- */
 public final class SimulationConfig {
     private final int width;
     private final int height;
@@ -80,9 +76,6 @@ public final class SimulationConfig {
     public int initialPredators() { return initialPredators; }
     public int initialGrassCells() { return initialGrassCells; }
 
-    /**
-     * Строитель для конфигурации.
-     */
     public static final class Builder {
         private int width = 20, height = 20;
         private long seed = 42L;

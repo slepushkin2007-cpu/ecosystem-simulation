@@ -16,11 +16,8 @@ class SimulationEdgeCasesTest {
         @Test
     void testOutOfGridNeighborsOnEdge() {
         Grid grid = new Grid(3, 3);
-        // Угловая клетка (0,0) имеет только 2 соседа
         assertEquals(2, grid.neighbors4(new Position(0, 0)).size());
-        // Клетка на краю, но не в углу (1,0) имеет 3 соседа
         assertEquals(3, grid.neighbors4(new Position(1, 0)).size());
-        // Клетка в центре (1,1) имеет 4 соседа
         assertEquals(4, grid.neighbors4(new Position(1, 1)).size());
     }
 

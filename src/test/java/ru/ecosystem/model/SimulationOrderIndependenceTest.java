@@ -8,7 +8,6 @@ class SimulationOrderIndependenceTest {
 
     @Test
     void testOrderIndependence() {
-        // Создаем две симуляции с ОДИНАКОВЫМ сидом
         SimulationConfig config = SimulationConfig.builder()
                 .width(10).height(10)
                 .seed(777L)
@@ -25,7 +24,6 @@ class SimulationOrderIndependenceTest {
             sim2.step();
         }
 
-        // Снимки должны быть абсолютно идентичны
         SimulationSnapshot snap1 = sim1.snapshot();
         SimulationSnapshot snap2 = sim2.snapshot();
 

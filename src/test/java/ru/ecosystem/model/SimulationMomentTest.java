@@ -21,8 +21,6 @@ class SimulationMomentTest {
                 .initialPredators(0)
                 .build();
         Simulation sim = new Simulation(config);
-        
-        // Трава изначально на максимуме (5), значит расти не должна
         GenerationResult result = sim.step();
         assertTrue(result.events().stream().noneMatch(e -> e instanceof GrassGrowthEvent));
     }
@@ -48,7 +46,6 @@ class SimulationMomentTest {
 
     @Test
     void testPredatorEatsHerbivore() {
-        // Делаем поле узким (1x2), чтобы травоядному было некуда убежать
         SimulationConfig config = SimulationConfig.builder()
                 .width(1).height(2)
                 .initialGrassCells(0)
@@ -56,8 +53,7 @@ class SimulationMomentTest {
                 .initialPredators(0)  
                 .build();
         Simulation sim = new Simulation(config);
-        
-        // Ставим их на соседние клетки
+
         Position hPos = new Position(0, 0);
         Position pPos = new Position(0, 1);
         
@@ -65,8 +61,7 @@ class SimulationMomentTest {
         sim.grid().cell(pPos).setAnimal(new Predator(pPos, 5, 0));
 
         GenerationResult result = sim.step();
-        
-        // Хищник должен съесть травоядное
+
         boolean eaten = result.events().stream().anyMatch(e -> e instanceof EatEvent ee && ee.eaterType().equals("P"));
         assertTrue(eaten, "Хищник должен съесть травоядное");
     }
@@ -92,7 +87,6 @@ class SimulationMomentTest {
         SimulationSnapshot snap1 = sim1.snapshot();
         SimulationSnapshot snap2 = sim2.snapshot();
 
-        // Проверяем, что все клетки абсолютно идентичны
         for (int i = 0; i < snap1.cells().size(); i++) {
             assertEquals(snap1.cells().get(i), snap2.cells().get(i));
         }

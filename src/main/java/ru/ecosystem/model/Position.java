@@ -2,9 +2,7 @@ package ru.ecosystem.model;
 
 import java.util.Objects;
 
-/**
- * Координата на решётке. Иммутабельный value-объект.
- */
+
 public final class Position {
     private final int x;
     private final int y;

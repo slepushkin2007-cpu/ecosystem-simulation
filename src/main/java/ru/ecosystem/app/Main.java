@@ -5,16 +5,12 @@ import ru.ecosystem.model.Simulation;
 import ru.ecosystem.model.SimulationConfig;
 import ru.ecosystem.output.ConsolePrinter;
 
-/**
- * Точка входа консольного приложения.
- */
 public final class Main {
 
     private Main() {
     }
 
     public static void main(String[] args) {
-        // Дефолтные настройки
         int width = 20;
         int height = 20;
         long seed = 42L;
@@ -23,7 +19,6 @@ public final class Main {
         int predators = 5;
         int grass = 80;
 
-        // Простой разбор аргументов
         for (int i = 0; i < args.length; i++) {
             switch (args[i]) {
                 case "--width" -> width = Integer.parseInt(args[++i]);
@@ -40,7 +35,6 @@ public final class Main {
             }
         }
 
-        // Защита от ошибок при запуске на маленьких полях
         int maxArea = width * height;
         if (grass > maxArea) {
             grass = Math.max(0, maxArea / 2);
@@ -67,11 +61,9 @@ public final class Main {
         
         for (int i = 0; i < ticks; i++) {
             GenerationResult result = sim.step();
-            
-            // Печатаем все события, которые произошли за этот шаг
+
             result.events().forEach(printer::onEvent);
 
-            // Каждые 5 шагов (или при завершении) печатаем статистику
             if (result.tick() % 5 == 0 || result.finished()) {
                 System.out.printf("--- Поколение %d: Трава=%d, Травоядные=%d, Хищники=%d ---%n",
                         result.tick(),

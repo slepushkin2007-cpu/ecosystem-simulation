@@ -2,10 +2,6 @@ package ru.ecosystem.model;
 
 import java.util.List;
 
-/**
- * Иммутабельный снимок состояния на начало поколения.
- * Используется для обеспечения одномоментности расчёта (в будущих коммитах).
- */
 public final class SimulationSnapshot {
     public record CellState(Position pos, int grassLevel, String animalType, int energy, int age) {}
 

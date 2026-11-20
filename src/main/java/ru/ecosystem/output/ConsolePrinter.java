@@ -2,9 +2,6 @@ package ru.ecosystem.output;
 
 import ru.ecosystem.model.event.*;
 
-/**
- * Печатает события в консоль. Единственное место в проекте, где допустим System.out.
- */
 public class ConsolePrinter implements EventListener {
     @Override
     public void onEvent(Event e) {

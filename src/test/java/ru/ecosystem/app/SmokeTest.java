@@ -11,7 +11,6 @@ class SmokeTest {
 
     @Test
     void testMainRunsWithoutErrors() {
-        // Перехватываем вывод
         PrintStream originalOut = System.out;
         PrintStream originalErr = System.err;
         ByteArrayOutputStream capturedOut = new ByteArrayOutputStream();
@@ -19,7 +18,6 @@ class SmokeTest {
         System.setErr(new PrintStream(capturedOut));
 
         try {
-            // Маленькое поле и мало шагов
             String[] args = {"--width", "5", "--height", "5", "--ticks", "3", "--herbivores", "2", "--predators", "1", "--grass", "5"};
             Main.main(args);
 

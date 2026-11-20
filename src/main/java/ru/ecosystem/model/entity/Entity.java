@@ -2,9 +2,6 @@ package ru.ecosystem.model.entity;
 
 import ru.ecosystem.model.Position;
 
-/**
- * Базовая сущность, находящаяся на решётке.
- */
 public abstract class Entity {
     private Position position;
 

@@ -5,9 +5,6 @@ import ru.ecosystem.model.exception.OutOfGridException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Двумерная решётка клеток.
- */
 public class Grid {
     private final int width;
     private final int height;
@@ -41,9 +38,6 @@ public class Grid {
         return cells[p.x()][p.y()];
     }
 
-    /**
-     * Соседи по 4 направлениям, только внутри решётки.
-     */
     public List<Position> neighbors4(Position p) {
         List<Position> result = new ArrayList<>(4);
         int[][] deltas = {{1,0},{-1,0},{0,1},{0,-1}};

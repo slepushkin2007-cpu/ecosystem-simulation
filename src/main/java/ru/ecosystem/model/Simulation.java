@@ -6,10 +6,6 @@ import ru.ecosystem.model.stats.GenerationStats;
 
 import java.util.*;
 
-/**
- * Движок симуляции экосистемы.
- * Класс не пишет в консоль и не знает о слое вывода.
- */
 public class Simulation {
     private final SimulationConfig config;
     private final Random random;
@@ -95,13 +91,6 @@ public class Simulation {
         return new GenerationStats(tick, grass, herb, pred, 0, 0);
     }
 
-    // ==========================================
-    // ОСНОВНАЯ ЛОГИКА ШАГА (ОДНОМОМЕНТНОСТЬ)
-    // ==========================================
-
-    /**
-     * Один шаг поколения. Возвращает события и статистику.
-     */
     public GenerationResult step() {
         if (finished) {
             return new GenerationResult(tick, List.of(), stats(), true, finishReason);
@@ -109,7 +98,6 @@ public class Simulation {
         tick++;
         List<Event> events = new ArrayList<>();
 
-        // 1) Рост травы
         for (int x = 0; x < grid.width(); x++) {
             for (int y = 0; y < grid.height(); y++) {
                 Cell c = grid.cell(new Position(x, y));
@@ -122,9 +110,7 @@ public class Simulation {
             }
         }
 
-        // 2) Питание и движение
         List<Animal> allAnimals = collectAnimals();
-        // Сортируем по стабильному ключу для детерминизма (позиция, тип)
         allAnimals.sort(Comparator
                 .comparing((Animal a) -> a.position().x())
                 .thenComparing(a -> a.position().y())
@@ -132,7 +118,7 @@ public class Simulation {
 
         List<Animal> survivors = new ArrayList<>();
         for (Animal a : allAnimals) {
-            if (!isAliveOnGrid(a)) continue; // уже съеден в этом поколении
+            if (!isAliveOnGrid(a)) continue;
             if (a instanceof Herbivore h) {
                 eatHerbivore(h, events);
                 tryMove(a, events);
@@ -143,7 +129,6 @@ public class Simulation {
             survivors.add(a);
         }
 
-        // 3) Размножение
         List<Animal> newborns = new ArrayList<>();
         for (Animal a : survivors) {
             if (a instanceof Herbivore h && h.energy() >= config.herbivoreBreedEnergy()) {
@@ -158,7 +143,6 @@ public class Simulation {
                 events.add(new BirthEvent(tick, "P", a.position(), a.position()));
             }
         }
-        // пытаемся разместить новорождённых на свободные клетки рядом с родителем или на его клетку
         for (Animal child : newborns) {
             Position spot = findFreeOrParentSpot(child.position());
             if (spot != null) {
@@ -167,7 +151,6 @@ public class Simulation {
             }
         }
 
-        // 4) Старение и смерть
         for (Animal a : survivors) {
             a.incrementAge();
             if (a instanceof Herbivore h) {
@@ -183,7 +166,6 @@ public class Simulation {
             }
         }
 
-        // 5) Проверка завершения
         GenerationStats stats = stats();
         if (stats.herbivores() == 0 && stats.predators() == 0) {
             finished = true;
@@ -193,7 +175,6 @@ public class Simulation {
         return new GenerationResult(tick, events, stats, finished, finishReason);
     }
 
-    // --- Вспомогательные методы ---
 
     private List<Animal> collectAnimals() {
         List<Animal> list = new ArrayList<>();
@@ -234,7 +215,7 @@ public class Simulation {
     }
 
     private void tryMove(Animal a, List<Event> events) {
-        if (random.nextDouble() < 0.5) return; // иногда не двигается
+        if (random.nextDouble() < 0.5) return;
         List<Position> neighbors = new ArrayList<>(grid.neighbors4(a.position()));
         Collections.shuffle(neighbors, random);
         for (Position n : neighbors) {

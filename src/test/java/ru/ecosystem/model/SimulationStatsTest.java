@@ -21,7 +21,6 @@ class SimulationStatsTest {
 
         assertEquals(5, stats.herbivores());
         assertEquals(2, stats.predators());
-        // Трава: 20 клеток по grassMaxLevel (по умолчанию 5) = 100
         assertEquals(20 * config.grassMaxLevel(), stats.grassTotalLevel());
     }
 

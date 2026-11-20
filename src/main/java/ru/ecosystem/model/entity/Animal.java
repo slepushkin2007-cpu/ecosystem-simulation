@@ -2,9 +2,6 @@ package ru.ecosystem.model.entity;
 
 import ru.ecosystem.model.Position;
 
-/**
- * Базовое животное: энергия и возраст.
- */
 public abstract class Animal extends Entity {
     private int energy;
     private int age;
